@@ -18,7 +18,7 @@ type ThemeConfig = {
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
   templateName: 'CUNOC LIBRERIA' /* App Name */,
-  mode: 'dark' /* light | dark */,
+  mode: 'light' /* light | dark */,
   contentWidth: 'boxed' /* full | boxed */,
 
   // ** Routing Configs
@@ -26,7 +26,7 @@ const themeConfig: ThemeConfig = {
 
   // ** Navigation (Menu) Configs
   menuTextTruncate: true /* true | false */,
-  navigationSize: 260 /* Number in PX(Pixels) /*! Note: This is for Vertical navigation menu only */,
+  navigationSize: 310 /* Number in PX(Pixels) /*! Note: This is for Vertical navigation menu only */,
 
   // ** Other Configs
   responsiveFontSizes: true /* true | false */,

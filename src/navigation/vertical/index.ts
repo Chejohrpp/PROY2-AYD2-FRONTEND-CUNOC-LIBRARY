@@ -17,7 +17,7 @@ import FileChartOutline from 'mdi-material-ui/FileChartOutline'
 import FileDocumentOutline from 'mdi-material-ui/FileDocumentOutline'
 import SummarizeOutlinedIcon from '@mui/icons-material/SummarizeOutlined';
 import ShareLocationOutlinedIcon from '@mui/icons-material/ShareLocationOutlined';
-
+import History from '@mui/icons-material/History';
 
 // ** Type import
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
@@ -25,19 +25,19 @@ import { VerticalNavItemsType } from 'src/@core/layouts/types'
 const navigation = (): VerticalNavItemsType => {
   return [
     {
-      title: 'Solo usuarios',      
-      sectionTitle: 'Solo usuarios'
-    },
-    {
       icon: HomeOutline,
-      title: 'Dashboard Usuario',
+      title: 'Catalogo de libros',
       path: '/pages/customer/dashboard'
     },
-
     {
       icon: ShareLocationOutlinedIcon,
-      title: 'Rastreo Pedido',
-      path: '/pages/customer/tracking-order'
+      title: 'Estado de los prestamos',
+      path: '/pages/customer/tracking-borrows'
+    },
+    {
+      icon: History,
+      title: 'Historial',
+      path: '/pages/customer/history'
     },
   ]
 }

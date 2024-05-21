@@ -12,63 +12,63 @@ import GppGoodOutlinedIcon from '@mui/icons-material/GppGoodOutlined';
 import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
 import FactoryOutlinedIcon from '@mui/icons-material/FactoryOutlined';
 import ImageComponentDetail from 'src/components/customers/dashboard/ImageComponent'
-
-
-
-interface StoreInfo {
-  storeCode: string;
-  stock: number;
-}
-
-interface Product{
-  idProduct: string;
-  name: string;
-  manufacturer: string;
-  price: number;
-  description: string;
-  guarantyMonths: number;
-  stores:StoreInfo[];
-}
+import { Book } from 'src/interface/book'
+import { decodeJWT } from 'src/utils/helpers/jwtHelper'
+import { registerReservation } from 'src/utils/apiUtils/reservation/requestReservation'
+import { errorNotification, successNotification } from 'src/utils/helpers/notification'
 
 interface ProductDetailCardProps {
-  product: Product;  
+  product: Book;
 }
 //<Img alt='Stumptown Roasters' src='/images/cards/analog-clock.jpg' />
-const ProductDetailCard : React.FC<ProductDetailCardProps> = ({ product }) => {
+const ProductDetailCard: React.FC<ProductDetailCardProps> = ({ product }) => {
+  const handleReservation = async () => {
+    const username = decodeJWT('sub');
+    try {
+      const senddata = {
+        date: new Date().toISOString(), // Formato ISO para la fecha actual
+        username: username,
+        idBook: product.id
+      }
+      const data = await registerReservation(senddata)
+      successNotification('Se ha registrado la reservacion')
+    } catch (error:any) {
+      errorNotification(error.message);      
+    }
+  }
   return (
     <Card>
       <Grid container spacing={6}>
         <Grid item xs={12} md={4}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <ImageComponentDetail idProduct={product.idProduct}/>
+            <ImageComponentDetail />
           </CardContent>
         </Grid>
         <Grid item xs={12} md={8}>
           <CardContent>
             <Typography variant='h5' sx={{ marginBottom: 2 }}>
-              {product.name}
-            </Typography>            
+              {product.title}
+            </Typography>
             <Typography variant='body2' sx={{ marginBottom: 4 }}>
-              {product.description}
+              {product.isbn}
             </Typography>
             <Typography variant='body1' sx={{ marginBottom: 4 }}>
-              Precio: Q.{product.price}
+              Cantidad: {product.amount}
             </Typography>
-            <Divider variant="middle"/>
+            <Divider variant="middle" />
             <Typography variant='caption' sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
-              <FactoryOutlinedIcon sx={{ marginRight: 1 }}/>Fabricante: {product.manufacturer}
+              <FactoryOutlinedIcon sx={{ marginRight: 1 }} />Fecha de publicacion: {product.datePublish}
             </Typography>
             <Typography variant='caption' sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
-              <StorefrontOutlinedIcon sx={{ marginRight: 1 }} />Codigo Intelaf: {product.idProduct}
+              <StorefrontOutlinedIcon sx={{ marginRight: 1 }} />Editorial: {product.editorial}
             </Typography>
-            {product.guarantyMonths != null ? (
-              <Typography variant='caption' sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
-                <GppGoodOutlinedIcon sx={{ marginRight: 1 }} /> Garantia: {product.guarantyMonths} Meses
-              </Typography>
-            ) : (
-              <div></div>
-            )}
-          </CardContent>          
+            <Typography variant='caption' sx={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+              <GppGoodOutlinedIcon sx={{ marginRight: 1 }} /> Author: {product.author}
+            </Typography>
+            <Button variant='outlined' sx={{ py: 2.5, width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0 }} onClick={handleReservation}>
+              Reservar
+            </Button>
+          </CardContent>
         </Grid>
       </Grid>
     </Card>

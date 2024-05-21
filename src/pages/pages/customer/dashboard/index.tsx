@@ -17,36 +17,27 @@ import { getAllProducts } from 'src/utils/apiUtils/product/allProductsUtil'
 import { SearchBarProductDashboard } from 'src/components/customers/dashboard/SearchBarProductDashboard'
 
 
-
-interface StoreInfo {
-  storeCode: string;
-  stock: number;
-}
-  
-interface Product{
-  idProduct: string;
-  name: string;
-  manufacturer: string;
-  price: number;
-  description: string;
-  guarantyMonths: number;
-  stores:StoreInfo[];
-}
-
-
 const DashboardConsumer = () => {
+
+  const router = useRouter();
+  const fecthData = () => {
+    // Verificar si el token es válido con el rol 'STUDENT'
+    if (!isTokenValid('STUDENT')) {
+      redirectToLogin(router);
+      return null; // Retornar null para evitar renderizado si el token no es válido
+    }
+  }
 
   const [productsData, setProductsData] = useState([]);  
   const [products, setProducts] = useState([]);  
 
   const handleSearch = (searchValue: string | null) => {
-    const findProduct = products.filter((product: Product) => {
+    const findProduct = products.filter((product: Book) => {
       if (searchValue) {
         const lowerCaseSearchValue = searchValue.toLowerCase();
         return (
-          product.idProduct.toLowerCase().includes(lowerCaseSearchValue) ||
-          product.name.toLowerCase().includes(lowerCaseSearchValue) ||
-          product.manufacturer.toLowerCase().includes(lowerCaseSearchValue)
+          product.isbn.toLowerCase().includes(lowerCaseSearchValue) ||
+          product.title.toLowerCase().includes(lowerCaseSearchValue)
         );
       } else {
         return true;
@@ -59,7 +50,7 @@ const DashboardConsumer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsD = await getAllProducts();   
+        const productsD = await getBooks();   
         setProductsData(productsD);
         setProducts(productsD);     
       } catch (error) {
@@ -67,7 +58,7 @@ const DashboardConsumer = () => {
         // Aquí puedes manejar el error si es necesario
       }
     };
-
+    fecthData();
     fetchData();
   }, []);
 
@@ -76,10 +67,10 @@ const DashboardConsumer = () => {
       <Grid item xs={12} md={4}>
         <Typography variant='h5'>
           <Link target='_blank'>
-            Listado de Productos
+            Listado de Libros
           </Link>
         </Typography>
-        <Typography variant='body2'>Listado general de todos los productos</Typography>
+        <Typography variant='body2'>Listado general de todos los libros</Typography>
       </Grid>
       <Grid item xs={12} md={8} >
         <SearchBarProductDashboard handleSearch={handleSearch} />
@@ -94,6 +85,10 @@ const DashboardConsumer = () => {
 }
 
 import UserLayout from 'src/layouts/UserLayout'
+import { getBooks } from 'src/utils/apiUtils/book/requestBook'
+import { Book } from 'src/interface/book'
+import { useRouter } from 'next/router'
+import { isTokenValid, redirectToLogin } from 'src/utils/helpers/jwtHelper'
 DashboardConsumer.getLayout = (page: ReactNode) => <UserLayout>{page}</UserLayout>
 
 export default DashboardConsumer

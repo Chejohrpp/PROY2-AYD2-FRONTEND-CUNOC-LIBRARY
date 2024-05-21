@@ -96,7 +96,7 @@ const LoginPage = () => {
         if (res.status === 200) {
           console.log(missedData);
           if (missedData.length > 0) {
-            setFormMessage(`Hace falta información en el sistema: ${missedData} favor de informar a un administrador.`);
+            setFormMessage(`Hace falta información en el sistema: ${missedData} favor de informar al bibliotecario`);
           }
         }
 
@@ -139,9 +139,9 @@ const LoginPage = () => {
           const role = res.data.role;
 
 
-          if (role === 'ADMINISTRATOR') {
+          if (role === 'LIBRARIAN') {
             router.push('/verify-system/upload-datafile/');
-          } else if (role === 'EMPLOYEE') {
+          } else if (role === 'LIBRARIAN') {
             setIsEmployee(true);
           } else { // CUSTOMER
             router.push('/pages/customer/dashboard');
@@ -271,18 +271,7 @@ const LoginPage = () => {
               sx={{ marginBottom: 7 }}
             >
               Iniciar Sesión
-            </Button>
-            <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Typography variant='body2' sx={{ marginRight: 2 }}>
-                ¿Eres nuevo?
-              </Typography>
-              <Typography variant='body2'>
-                <Link passHref href='/pages/register'>
-                  <LinkStyled>Crear una cuenta</LinkStyled>
-                </Link>
-              </Typography>
-            </Box>
-            
+            </Button>            
           </form>
         </CardContent>
       </Card>

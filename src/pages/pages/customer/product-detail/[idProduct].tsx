@@ -14,20 +14,26 @@ import ProductDetailCard from 'src/views/customer-dashboard/ProductDetailCard'
 import { Link, Typography } from '@mui/material'
 import ProductStoreStock from 'src/views/customer-dashboard/ProductStoreStock'
 
-const ProductDetail: React.FC = () => {
+const ProductDetail = () => {
   const router = useRouter();  
 
-  const [idProduct, setIdProduct] = useState<string | null>(null);
+  const fecthData = () => {
+    // Verificar si el token es válido con el rol 'STUDENT'
+    if (!isTokenValid('STUDENT')) {
+      redirectToLogin(router);
+      return null; // Retornar null para evitar renderizado si el token no es válido
+    }
+  }
+
+  const [idProduct, setIdProduct] = useState(null);
 
   useEffect(() => {
     const { idProduct } = router.query;
-    if (typeof idProduct === 'string') {
+      //@ts-ignore
       setIdProduct(idProduct);
-    }
   }, [router.query]);
 
   const [product, setProduct] = useState(null as any);  
-  const [stores, setStores] = useState(null as any);  
 
   const [errorFind, setErrorFind] = useState(false);
   const [errorStr, setErrorStr] = useState('');
@@ -36,10 +42,8 @@ const ProductDetail: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productData = await getProductById(idProduct as string);        
-        const storesData = await getAllStores();
+        const productData = await getBook(idProduct);        
         setProduct(productData);        
-        setStores(storesData);
       } catch (error) {
         console.log(error);
         if (error instanceof Error) {
@@ -50,6 +54,7 @@ const ProductDetail: React.FC = () => {
         }
       }
     };
+    fecthData()
     if(idProduct != undefined || idProduct != null){
       fetchData();
     }
@@ -63,7 +68,7 @@ const ProductDetail: React.FC = () => {
             <Error404Edited errorStr={errorStr}/>
         </Grid>
       ) : (
-        product == null || stores == null ? (
+        product == null ? (
           <Grid item xs={12}>
               Producto vacio
           </Grid>
@@ -72,17 +77,14 @@ const ProductDetail: React.FC = () => {
             <Grid item xs={12} md={12}>
               <Typography variant='h5'>
                 <Link target='_blank'>
-                  Detalles del producto
+                  Detalles del Libro
                 </Link>
               </Typography>
-              <Typography variant='body2'>Listado de detalles del producto</Typography>
+              <Typography variant='body2'>Listado de detalles del Libro</Typography>
             </Grid>
             <Grid container spacing={6} xs={12} md={12}>
               <Grid item sm={8}>
                 <ProductDetailCard product={product}/>
-              </Grid>
-              <Grid item sm={4}>
-                <ProductStoreStock stores={product.stores} allStores={stores}/>
               </Grid>
             </Grid>
           </Grid>
@@ -92,6 +94,8 @@ const ProductDetail: React.FC = () => {
   )
 }
 import UserLayout from 'src/layouts/UserLayout'
+import { getBook } from 'src/utils/apiUtils/book/requestBook'
+import { isTokenValid, redirectToLogin } from 'src/utils/helpers/jwtHelper'
 ProductDetail.getLayout = (page: ReactNode) => <UserLayout>{page}</UserLayout>
 
 export default ProductDetail

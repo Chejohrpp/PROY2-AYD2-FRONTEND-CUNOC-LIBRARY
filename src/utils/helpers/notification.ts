@@ -7,8 +7,8 @@ export const errorNotification = (message: string) => {
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
-    background: "#3D3759",
-    color: "#fff",
+    background: "#EEE7DE",
+    color: "#000000",
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
       toast.onmouseleave = Swal.resumeTimer;
@@ -27,8 +27,8 @@ export const successNotification = (message: string) => {
     position: "center",
     showConfirmButton: false,
     timer: 3000,
-    background: "#3D3759",
-    color: "#fff",
+    background: "#EEE7DE",
+    color: "#000000",
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
@@ -58,8 +58,8 @@ export const successNotificationWithAction = (message: string, action: any) => {
   Swal.fire({
     icon: "success",
     title: message,
-    background: "#3D3759",
-    color: "#fff",
+    background: "#EEE7DE",
+    color: "#000000",
     confirmButtonText: "Regresar",
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */

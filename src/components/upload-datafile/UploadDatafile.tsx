@@ -24,6 +24,7 @@ export const UploadDataFileForm = () => {
     const [errorsReportData, setErrorsReportData] = useState([]);
     const [records, setRecords] = useState(0);
     const [data, setData] = useState([]);
+    const [isSend, setIsSend] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,10 +36,11 @@ export const UploadDataFileForm = () => {
 
         try {
             const res = await uploadDataFile(formData);
-            console.log(res);
+            console.log('response', res);
             
             setErrorsReportData(res.data.errors);
             setRecords(res.data.records);
+            setIsSend(true)
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -91,8 +93,12 @@ export const UploadDataFileForm = () => {
                 {errorsReportData && errorsReportData.length > 0 && (
                     <Grid>
                         <ErrorsDataFileReport records={records} dataServer={errorsReportData} />
-                    </Grid>
-                        
+                    </Grid>                        
+                )}
+                { errorsReportData.length == 0 && isSend && (
+                    <Grid>
+                        Todos los arvhivos ingresados correctamente!
+                    </Grid>                        
                 )}
                 
             </Grid>

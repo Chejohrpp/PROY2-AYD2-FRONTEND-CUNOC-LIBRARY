@@ -25,11 +25,11 @@ export const SearchBarProductDashboard = ({handleSearch}: CDefault) => {
         <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
                 <TextField
-                    id='searchIdProducto'
+                    id='searchIdBook'
                     value={inputValue ?? ""}
                     onChange={handleChange}
                     onKeyDown={handleEnterKey}
-                    placeholder='Buscar por nombre, codigo o fabricante'
+                    placeholder='Buscar por isbn y nombre'
                     size='medium'
                     sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
                     InputProps={{

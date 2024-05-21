@@ -9,41 +9,12 @@ const Img = styled('img')(({ theme }) => ({
     borderRadius: theme.shape.borderRadius
   }))
 
-const ImageComponentDetail: React.FC<{ idProduct: string }> = ({ idProduct }) => {
+const ImageComponentDetail = () => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
-
-    useEffect(() => {
-    const fetchImage = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/v1/images/image-by-idProduct/${idProduct}`, {
-          responseType: 'blob', // Indica que la respuesta es una imagen
-          headers: {
-            Authorization: getCookieJwt()
-          }
-        });
-        const blob = new Blob([response.data], { type: response.headers['content-type'] });
-        const imageUrl = URL.createObjectURL(blob);
-        setImageSrc(imageUrl);
-        console.log(imageSrc);
-      } catch (error) {
-        console.error('Failed to fetch image:', error);
-      }
-    };
-
-    fetchImage();
-
-    // Limpia la URL del objeto al desmontar el componente para evitar memory leaks
-    return () => {
-      if (imageSrc) {
-        URL.revokeObjectURL(imageSrc);
-      }
-    };
-  }, [idProduct]);
-  
     return (
       <div>        
         {imageSrc ? (
-          <Img src={imageSrc} alt={`Product ${idProduct}`} />
+          <Img src={imageSrc} alt={`Product`} />
         ) : (
             <Img alt='Not found' src='/images/imagotipo.png' />
         )}        
