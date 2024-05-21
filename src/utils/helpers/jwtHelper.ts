@@ -9,7 +9,7 @@ export function decodeJWT(attributeName: string): any {
     const token = getCookie('jwt');
     
     if (!token) {
-      console.error('Error decoding JWT: No token found');
+      // console.error('Error decoding JWT: No token found');
       return null;
     }
     
