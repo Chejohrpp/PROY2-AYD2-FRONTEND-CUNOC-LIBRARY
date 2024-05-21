@@ -6,8 +6,20 @@ import { deleteCookie } from 'cookies-next';
 
 export function decodeJWT(attributeName: string): any {
   try {
-    const token = getCookie('jwt')
+    const token = getCookie('jwt');
+    
+    if (!token) {
+      console.error('Error decoding JWT: No token found');
+      return null;
+    }
+    
     const decodedToken: any = jwt.decode(token);
+
+    if (!decodedToken) {
+      console.error('Error decoding JWT: Unable to decode token');
+      return null;
+    }
+
     return decodedToken[attributeName];
   } catch (error) {
     console.error('Error decoding JWT:', error);
