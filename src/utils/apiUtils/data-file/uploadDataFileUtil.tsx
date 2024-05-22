@@ -5,7 +5,7 @@ export async function uploadDataFile(data: any): Promise<any> {
     try {
         console.log("DATA UTIL");
         console.log(data);
-        const response = await axios.post(`http://192.168.0.19:8080/v1/datafile`, data, {
+        const response = await axios.post(`http://18.208.211.106/v1/datafile`, data, {
             headers: {
                 Authorization: getCookieJwt()
             }
