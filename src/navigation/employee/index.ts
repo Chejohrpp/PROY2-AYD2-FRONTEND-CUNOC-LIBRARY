@@ -93,16 +93,16 @@ const navigation = (): VerticalNavItemsType => {
     {
       icon: FileChartOutline,
       title: 'Total de dinero recaudado en un intervalo de tiempo',
-      path: '/reports/sales-by-idCustomer'
+      path: '/reports/borrow/borrow-revenue-interval'
     },
     {
       title: 'Carrera que tiene más registros de préstamos en un intervalo de tiempo',
-      path: '/reports/orders/in-time-pending-verify',
+      path: '/reports/borrow/borrow-career-interval',
       icon: FileChartOutline
     },
     {
       title: 'moras que un estudiante ha pagado en un intervalo de tiempo',
-      path: '/reports/orders/overdue-arriving-store',
+      path: '/reports/borrow/late-fee-borrow-student-interval',
       icon: FileChartOutline
     },
     {
@@ -112,12 +112,12 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'libros que están prestados actualmente a un estudiante',
-      path: '/reports/orders/leaving-store-in-transit',
+      path: '/reports/borrow/borrow-student',
       icon: FileChartOutline
     },
     {
       title: 'El estudiante que más préstamos ha realizado en un intervalo de tiempo',
-      path: '/reports/orders/leaving-store-in-transit',
+      path: '/reports/borrow/student-most-borrow-interval',
       icon: FileChartOutline
     },
     {
