@@ -203,7 +203,7 @@ const LoginPage = () => {
           </Box>
           <Box sx={{ mb: 6 }}>
             <Typography variant='h5' sx={{ fontWeight: 600, marginBottom: 1.5 }}>
-              Bienvenido a {themeConfig.templateName}!
+              Bienvenido a {themeConfig.templateName}
             </Typography>
             <Typography variant='body2'>Ingresa tus credenciales para iniciar sesión</Typography>
           </Box>
